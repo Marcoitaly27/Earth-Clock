@@ -1,0 +1,36 @@
+.clock-column { min-width: 0; }
+.scale { font-size: 9px; letter-spacing: 2px; text-align: center; color: var(--muted); margin-bottom: 10px; }
+.dial { width: 100%; max-width: 520px; aspect-ratio: 1; position: relative; margin: 0 auto; touch-action: none; user-select: none; cursor: grab; }
+.dial:active { cursor: grabbing; }
+#dial-art svg { width: 100%; display: block; overflow: visible; }
+.era-arc { fill: none; stroke-width: 8; }
+.inner-ring { stroke: var(--line); stroke-width: .6; fill: none; }
+.tick { stroke: var(--muted); stroke-width: .8; opacity: .6; }
+.dial-number { font-family: inherit; font-size: 11px; fill: var(--muted); text-anchor: middle; dominant-baseline: central; }
+#hand { transform-origin: 250px 250px; pointer-events: none; }
+#hand line { stroke: var(--ink); stroke-width: 2; stroke-linecap: round; }
+#hand circle { fill: var(--paper); stroke: var(--ink); stroke-width: 2; }
+.clock-readout { pointer-events: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; width: 48%; }
+.readout-label { font-size: 8px; letter-spacing: 1.6px; color: var(--muted); display: block; }
+#clock-time { display: block; font-family: Georgia, serif; font-size: clamp(25px, 4vw, 46px); letter-spacing: -1px; font-variant-numeric: tabular-nums; margin: 10px 0 16px; }
+.era-pill { display: inline-flex; align-items: center; gap: 7px; font-size: 10px; color: var(--ink); }
+.era-pill::before { content: ''; width: 6px; height: 6px; background: var(--era); border-radius: 50%; }
+.marker { position: absolute; transform: translate(-50%, -50%); width: 11px; height: 11px; padding: 0; background: var(--dot, var(--ink)); border: 2px solid var(--paper); border-radius: 50%; z-index: 2; cursor: pointer; }
+.marker::after { content: ''; position: absolute; inset: -3px; border-radius: 50%; }
+.geology { --dot: #a74c2f; }
+.life { --dot: #436f50; }
+.extinction { --dot: #9c4561; }
+.humans { --dot: #426d98; }
+.marker[aria-pressed='true'] { outline: 1px solid var(--ink); outline-offset: 3px; }
+.marker:hover { outline: 2px solid var(--accent); outline-offset: 3px; z-index: 4; }
+.marker:focus-visible { z-index: 5; outline: 3px solid var(--accent); }
+.range-labels { display: flex; justify-content: space-between; gap: 10px; font-size: 9px; color: var(--muted); margin: 8px 2px; }
+.range-labels > span { display: flex; gap: 7px; }
+#timeline { display: block; width: 100%; margin: 10px 0 23px; accent-color: var(--ink); cursor: pointer; height: 20px; }
+.controls { display: flex; justify-content: center; gap: 10px; }
+.controls button { border-radius: 4px; padding: 12px 20px; min-height: 44px; font-size: 12px; display: inline-flex; align-items: center; gap: 9px; }
+.primary { border: 1px solid var(--ink); background: var(--ink); color: var(--paper); }
+.secondary { border: 1px solid var(--line); background: transparent; }
+.hint { color: var(--muted); font-size: 10px; text-align: center; line-height: 1.7; max-width: 370px; margin: 16px auto 0; }
+@media (max-width: 760px) { #clock-time { font-size: clamp(25px, 8vw, 43px); } }
+@media (max-width: 360px) { .readout-label { font-size: 6px; letter-spacing: 1px; } .controls button { padding: 12px 15px; } }
