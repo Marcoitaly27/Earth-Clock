@@ -60,3 +60,8 @@ export function angleToSeconds(x, y, previous = 0) {
   const total = turn * DAY_SECONDS;
   return total < 0.000001 && previous > DAY_SECONDS / 2 ? DAY_SECONDS : total;
 }
+
+export function myaDurationSeconds(mya) {
+  myaToSeconds(mya);
+  return mya / EARTH_MYA * DAY_SECONDS;
+}

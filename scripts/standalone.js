@@ -2,7 +2,7 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 
 export function standaloneSource() {
-  const files = ['src/time.js', 'data/events.js', 'src/eras.js', 'src/copy.js', 'src/dial.js', 'src/ui.js', 'src/playback.js', 'src/app.js'];
+  const files = ['src/time.js', 'data/model.js', 'data/precambrian.js', 'data/phanerozoic.js', 'data/events.js', 'src/eras.js', 'src/geology.js', 'src/copy.js', 'src/perspective.js', 'src/dial.js', 'src/transitions.js', 'src/curiosities.js', 'src/ui.js', 'src/playback.js', 'src/app.js'];
   const source = files.map(file => readFileSync(new URL(`../${file}`, import.meta.url), 'utf8')
     .replace(/^import .*;\n/gm, '').replace(/^export /gm, '').trim()).join('\n');
   return `/* Generated file-URL fallback. Edit source modules, then run node scripts/standalone.js. */\n(() => { ${source.split('\n').map(line => line.trim()).join(' ')} })();\n`;

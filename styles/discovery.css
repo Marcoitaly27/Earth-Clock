@@ -1,0 +1,49 @@
+.geological-context { display: flex; flex-wrap: wrap; gap: 10px 16px; padding: 0; margin: 20px 0 18px; list-style: none; }
+.geological-context li { font-size: 10px; line-height: 1.6; }
+.geological-context li span { display: block; font-size: 8px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--muted); }
+.boundary-note { font-size: 10px; color: var(--muted); line-height: 1.6; margin: -6px 0 16px; max-width: 34em; }
+.clock-context { font-family: Georgia, serif; font-style: italic; font-size: 16px; line-height: 1.6; color: var(--accent); margin: 14px 0 20px; max-width: 28em; }
+.curiosities { position: relative; padding: 16px 0 12px 16px; margin: 22px 0; border-left: 1px solid var(--line); }
+.curiosities h3 { margin: 0 0 10px; color: var(--muted); font-size: 9px; font-weight: 600; letter-spacing: 1.8px; line-height: 1.6; }
+#curiosity-text { font-family: Georgia, serif; font-size: 17px; line-height: 1.65; margin: 0; min-height: 5em; max-width: 29em; text-wrap: pretty; }
+.curiosity-bottom { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-top: 8px; }
+#curiosity-source { display: inline-flex; align-items: center; min-height: 24px; font-size: 11px; line-height: 1.6; color: var(--muted); text-underline-offset: 4px; }
+#curiosity-source:hover { color: var(--accent); }
+.curiosity-controls { display: flex; align-items: center; gap: 1px; flex-shrink: 0; }
+.curiosity-controls button { width: 44px; height: 44px; border: 0; background: none; border-radius: 50%; }
+.curiosity-controls button:hover { color: var(--accent); background: var(--surface); }
+#curiosity-count { font-family: 'Courier New', monospace; font-size: 10px; color: var(--muted); white-space: nowrap; }
+.clock-decimal { display: block; font-family: 'Courier New', monospace; font-size: 12px; letter-spacing: 1px; margin-top: 5px; color: var(--muted); }
+.event-card h2 { margin-top: 12px; }
+.event-card::after { top: 115px; }
+#event-description { margin-top: 17px; }
+#age { font-variant-numeric: tabular-nums; }
+.experience { align-items: start; }
+.clock-column { position: sticky; top: 25px; }
+.story-column { padding-top: 65px; }
+#timeline { height: 44px; margin-bottom: 10px; }
+.event-navigation button { min-width: 44px; min-height: 44px; }
+.geology { --dot: #a74c2f; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .marker.geology { --dot: #dd9b7a; }
+  :root:not([data-theme='light']) .marker.life { --dot: #96bb92; }
+  :root:not([data-theme='light']) .marker.extinction { --dot: #da91ab; }
+  :root:not([data-theme='light']) .marker.humans { --dot: #8eb7e0; }
+}
+:root[data-theme='dark'] .marker.geology { --dot: #dd9b7a; }
+:root[data-theme='dark'] .marker.life { --dot: #96bb92; }
+:root[data-theme='dark'] .marker.extinction { --dot: #da91ab; }
+:root[data-theme='dark'] .marker.humans { --dot: #8eb7e0; }
+@media (max-width: 760px) {
+  .clock-column { position: static; }
+  .story-column { padding-top: 0; }
+  .curiosities { margin: 20px 0; padding-left: 13px; }
+  #curiosity-text { font-size: 17px; min-height: 6.5em; }
+  .curiosity-bottom { gap: 4px; }
+  .geological-context { gap: 9px 16px; }
+  .event-card h2 { font-size: clamp(28px, 8vw, 35px); }
+  #curiosity-source { max-width: 155px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .marker { transition: none; }
+}

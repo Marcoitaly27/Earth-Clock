@@ -10,10 +10,17 @@ export const copy = {
     humans: seconds => `Humans appear ${seconds} seconds before midnight.`,
     humanNote: 'Homo sapiens: about 300,000 years. Almost the entire day happened without us.',
     footer: 'A small perspective on a very big story.', about: 'Dates are rounded. Time is proportional. Curiosity is encouraged.',
-    journey: '25 moments. One shared planet.', category: { geology: 'Geology', life: 'Life', extinction: 'Extinction', humans: 'Humanity' },
+    journey: count => `${count} moments. One shared planet.`, category: { geology: 'Geology', life: 'Life', extinction: 'Extinction', humans: 'Humanity' },
     first: 'Earth forms', last: 'Today', reduced: 'Reduced motion: playback advances one hour at a time.',
     close: 'Close human perspective', eraLabel: 'Geological intervals', position: 'Clock hand',
-    prev: 'Previous event', next: 'Next event'
+    prev: 'Previous event', next: 'Next event',
+    curiosity: 'ONE MORE THING', prevDetail: 'Previous detail', nextDetail: 'Next detail', noteSource: 'Source for this detail',
+    geology: 'Geological context of this event', ranks: { eon: 'Eon', era: 'Era', period: 'Period', epoch: 'Epoch' },
+    ageLabels: { Ma: 'million years ago', ka: 'thousand years ago', yr: 'years ago' }, ageUnits: { Ma: 'Ma', ka: 'ka', yr: 'yr' },
+    elapsed: value => `By this point, ${value}% of Earth’s day has already passed.`,
+    remaining: (value, unit) => `About ${value} ${unit} before midnight.`,
+    holocene: value => `The entire Holocene, about 11,700 years, fits into ${value} seconds of this day.`,
+    minuteUnit: 'minutes', secondUnit: 'seconds', boundary: 'At this boundary, the younger geological interval begins.'
   },
   it: {
     project: 'Un giorno sulla Terra', eyebrow: 'IL TEMPO PROFONDO, PIÙ VICINO', title: 'Un intero pianeta.\nIn un solo giorno.',
@@ -26,9 +33,16 @@ export const copy = {
     humans: seconds => `Gli esseri umani compaiono ${seconds} secondi prima di mezzanotte.`,
     humanNote: 'Homo sapiens: circa 300.000 anni. Quasi tutto il giorno è trascorso senza di noi.',
     footer: 'Una piccola prospettiva su una storia immensa.', about: 'Date arrotondate. Tempo proporzionale. Curiosità benvenuta.',
-    journey: '25 istanti. Un pianeta condiviso.', category: { geology: 'Geologia', life: 'Vita', extinction: 'Estinzione', humans: 'Umanità' },
+    journey: count => `${count} istanti. Un pianeta condiviso.`, category: { geology: 'Geologia', life: 'Vita', extinction: 'Estinzione', humans: 'Umanità' },
     first: 'Si forma la Terra', last: 'Oggi', reduced: 'Movimento ridotto: la riproduzione avanza di un’ora alla volta.',
     close: 'Chiudi la prospettiva umana', eraLabel: 'Intervalli geologici', position: 'Lancetta',
-    prev: 'Evento precedente', next: 'Evento successivo'
+    prev: 'Evento precedente', next: 'Evento successivo',
+    curiosity: 'UN DETTAGLIO IN PIÙ', prevDetail: 'Dettaglio precedente', nextDetail: 'Dettaglio successivo', noteSource: 'Fonte di questo dettaglio',
+    geology: 'Contesto geologico di questo evento', ranks: { eon: 'Eone', era: 'Era', period: 'Periodo', epoch: 'Epoca' },
+    ageLabels: { Ma: 'milioni di anni fa', ka: 'migliaia di anni fa', yr: 'anni fa' }, ageUnits: { Ma: 'Ma', ka: 'ka', yr: 'anni' },
+    elapsed: value => `A questo punto è già trascorso il ${value}% del giorno terrestre.`,
+    remaining: (value, unit) => `Circa ${value} ${unit} prima di mezzanotte.`,
+    holocene: value => `L’intero Olocene, circa 11.700 anni, occupa ${value} secondi di questo giorno.`,
+    minuteUnit: 'minuti', secondUnit: 'secondi', boundary: 'Qui inizia l’intervallo geologico più recente.'
   }
 };

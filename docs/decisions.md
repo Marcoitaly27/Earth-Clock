@@ -36,3 +36,21 @@
   contrast with monospaced measurements. All artwork is local SVG/CSS; the paper texture is
   a tiny inline SVG tile. `styles/details.css` contains the visual treatment separately from
   the base layout and clock controls. Hover feedback is subtle and honors reduced motion.
+- **Curiosities belong to events.** The same event array is composed from two chronological
+  files to keep each file small. Each event owns two bilingual details; optional fact sources
+  inherit the existing event source. Editorial types are metadata, not UI badges.
+- **One detail at a time.** The first fact is visible immediately, with a short delayed fade
+  after primary content. Deliberate 44px controls reveal the next detail and pause playback.
+  There is no auto-rotating carousel, hover dependency or second translation system.
+- **Geological hierarchy.** Correct eon/era/period ranks extend the existing six-interval view;
+  Pleistocene/Holocene epochs help orient the final human events. The original rounded ages
+  remain intact. Boundary events select the younger interval. See docs/audit.md for precision limits.
+- **Scale at human resolution.** Ages switch Ma → ka → years; final events show milliseconds.
+  Six contextual comparisons derive from the shared time functions. Extra digits express
+  proportion, not scientific certainty. Holocene duration is context, not a new historical stop.
+- **Interruptible motion.** Only explicit event jumps interpolate the dial and age over 260ms.
+  Dragging/slider input cancels interpolation immediately. Text fades take 180ms, details lag
+  70ms, and reduced-motion changes settle/cancel ongoing animations. Frame timestamps are
+  clamped at zero elapsed because a queued frame can precede the performance.now() start time.
+- **Screen reader restraint.** The existing polite status announces event changes and explicit
+  detail navigation. The whole card is not live, preventing a long narration at each frame.

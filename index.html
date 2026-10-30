@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="styles/base.css">
   <link rel="stylesheet" href="styles/clock.css">
   <link rel="stylesheet" href="styles/details.css">
+  <link rel="stylesheet" href="styles/discovery.css">
   <script src="src/boot.js" defer></script>
 </head>
 <body>
@@ -19,19 +20,37 @@
     <section class="experience" aria-label="Earth clock">
       <div class="clock-column">
         <p class="scale" data-copy="scale">4.54 BILLION YEARS → 24 HOURS</p>
-        <div id="dial" class="dial"><div id="dial-art"></div><div id="markers"></div><div class="clock-readout"><span class="readout-label" data-copy="explore">EXPLORE THE DAY</span><output id="clock-time">00:00:00</output><span id="era-name" class="era-pill">Hadean</span></div></div>
+        <div id="dial" class="dial"><div id="dial-art"></div><div id="markers"></div><div class="clock-readout"><span class="readout-label" data-copy="explore">EXPLORE THE DAY</span><output id="clock-time" aria-live="off">00:00:00</output><span id="era-name" class="era-pill">Hadean</span></div></div>
         <div class="range-labels"><span>00:00 <span data-copy="first">Earth forms</span></span><span><span data-copy="last">Today</span> 24:00</span></div>
         <input id="timeline" type="range" min="0" max="86400" step="0.001" value="0" aria-label="Time through Earth’s history" aria-describedby="clock-hint">
         <div class="controls"><button id="play" class="primary"><span aria-hidden="true">▶</span> <span data-copy="play">Play the day</span></button><button id="now" class="secondary"><span aria-hidden="true">→</span> <span data-copy="now">Now</span></button></div>
         <p class="hint" id="clock-hint" data-copy="hint">Drag the hand or use the slider. Arrow keys move one minute; Shift moves one hour.</p><p id="motion-note" class="hint" hidden></p>
       </div>
       <aside class="story-column">
-        <div class="age-block"><span class="eyebrow" data-copy="before">million years ago</span><p><output id="age">4,540</output><span class="age-unit"> Ma</span></p><div class="era-key" id="era-key"></div></div>
-        <article id="event-card" class="event-card" aria-labelledby="event-name"><div class="card-top"><span class="eyebrow" data-copy="event">A MOMENT IN DEEP TIME</span><span id="category" class="category"></span></div><h2 id="event-name"></h2><div class="event-meta"><span id="event-time"></span><span id="event-age"></span></div><p id="event-description"></p><details id="uncertainty"><summary data-copy="uncertain">Approximate / debated</summary><p id="uncertainty-note"></p></details><a id="event-source" target="_blank" rel="noopener noreferrer"><span data-copy="source">Explore the source</span> →</a><div class="event-navigation"><button id="prev" aria-label="Previous event">←</button><span id="event-index"></span><button id="next" aria-label="Next event">→</button></div></article>
+        <div class="age-block"><span id="age-label" class="eyebrow" data-copy="before">million years ago</span><p><output id="age" aria-live="off">4,540</output><span id="age-unit" class="age-unit"> Ma</span></p><div class="era-key" id="era-key"></div></div>
+        <article id="event-card" class="event-card" aria-labelledby="event-name">
+          <div class="card-top"><span class="eyebrow" data-copy="event">A MOMENT IN DEEP TIME</span><span id="category" class="category"></span></div>
+          <ol id="geological-context" class="geological-context"></ol>
+          <p id="boundary-note" class="boundary-note" hidden></p>
+          <h2 id="event-name"></h2>
+          <div class="event-meta"><span id="event-time"></span><span id="event-age"></span></div>
+          <p id="event-description"></p>
+          <p id="clock-context" class="clock-context" hidden></p>
+          <section id="curiosities" class="curiosities" aria-labelledby="curiosity-heading">
+          <h3 id="curiosity-heading" data-copy="curiosity">ONE MORE THING</h3>
+          <p id="curiosity-text"></p>
+          <div class="curiosity-bottom">
+          <a id="curiosity-source" target="_blank" rel="noopener noreferrer"></a>
+          <div class="curiosity-controls"><button id="curiosity-prev" aria-controls="curiosity-text" aria-label="Previous detail">←</button><span id="curiosity-count"></span><button id="curiosity-next" aria-controls="curiosity-text" aria-label="Next detail">→</button></div></div>
+          </section>
+          <details id="uncertainty"><summary data-copy="uncertain">Approximate / debated</summary><p id="uncertainty-note"></p></details>
+          <a id="event-source" target="_blank" rel="noopener noreferrer"><span data-copy="source">Explore the source</span> →</a>
+          <div class="event-navigation"><button id="prev" aria-label="Previous event">←</button><span id="event-index"></span><button id="next" aria-label="Next event">→</button></div>
+        </article>
         <div id="human-perspective" class="human-perspective" hidden><button id="close-human" class="close" aria-label="Close human perspective">×</button><p id="human-scale"></p><p data-copy="humanNote"></p></div>
       </aside>
     </section>
-    <section class="moments"><div class="moments-heading"><p class="eyebrow" data-copy="journey">25 moments. One shared planet.</p><label for="event-select" data-copy="select">Explore an event</label></div><select id="event-select" aria-label="Explore an event"></select><div class="legend" id="legend"></div></section>
+    <section class="moments"><div class="moments-heading"><p class="eyebrow" data-copy="journey">Moments on one shared planet.</p><label for="event-select" data-copy="select">Explore an event</label></div><select id="event-select" aria-label="Explore an event"></select><div class="legend" id="legend"></div></section>
     <p id="announcement" class="sr-only" role="status" aria-live="polite"></p>
   </main>
   <footer><span data-copy="footer">A small perspective on a very big story.</span><span data-copy="about">Dates are rounded. Time is proportional. Curiosity is encouraged.</span></footer>

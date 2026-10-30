@@ -44,7 +44,7 @@ function chooseEvent(index) {
   stop();
   state.index = index;
   state.seconds = myaToSeconds(events[index].mya);
-  ui.renderPosition(state);
+  ui.renderPosition(state, true);
   ui.renderEvent(state, true);
 }
 
@@ -93,6 +93,7 @@ ui.get('markers').addEventListener('click', event => {
   const marker = event.target.closest('[data-event]');
   if (marker) chooseEvent(events.findIndex(item => item.id === marker.dataset.event));
 });
+ui.get('curiosities').addEventListener('click', event => { if (event.target.closest('button')) stop(); });
 ui.get('event-select').addEventListener('change', event => chooseEvent(events.findIndex(item => item.id === event.target.value)));
 ui.get('prev').addEventListener('click', () => chooseEvent(state.index - 1));
 ui.get('next').addEventListener('click', () => chooseEvent(state.index + 1));
@@ -135,6 +136,8 @@ for (const type of ['pointerup', 'pointercancel', 'lostpointercapture']) {
 }
 function motionChanged() {
   stop();
+  ui.renderPosition(state);
+  ui.renderEvent(state);
   ui.get('motion-note').hidden = !reducedMotion.matches;
 }
 reducedMotion.addEventListener('change', motionChanged);

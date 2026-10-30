@@ -2,37 +2,67 @@ import { events } from '../data/events.js';
 import { copy } from './copy.js';
 import { eras, eraAt } from './eras.js';
 import { dialMarkup, placeMarkers } from './dial.js';
-import { myaToClock, formatClock, secondsToMya, DAY_SECONDS, myaToSeconds } from './time.js';
+import { ageReadout, preciseClock, perspectiveText } from './perspective.js';
+import { geologyAt } from './geology.js';
+import { createTransitions } from './transitions.js';
+import { createCuriosities } from './curiosities.js';
+import { secondsToMya, DAY_SECONDS, myaToSeconds } from './time.js';
 
 export function createUI() {
   const get = id => document.getElementById(id);
   get('dial-art').innerHTML = dialMarkup();
+  const transitions = createTransitions();
+  const curiosities = createCuriosities(get, transitions);
   function ageText(age, lang) {
-    return new Intl.NumberFormat(lang, { maximumSignificantDigits: 6 }).format(age);
+    const info = ageReadout(age, lang);
+    return `${info.value} ${info.unit}`;
   }
-  function renderPosition(state) {
+  function drawPosition(state) {
     const age = secondsToMya(state.seconds);
     const era = eraAt(age);
-    const time = formatClock(myaToClock(age));
-    get('clock-time').textContent = time;
-    get('age').textContent = ageText(age, state.lang);
+    const time = preciseClock(age);
+    const [whole, fraction] = time.split('.');
+    get('clock-time').textContent = whole;
+    if (fraction) {
+      const decimal = document.createElement('small');
+      decimal.className = 'clock-decimal';
+      decimal.textContent = `.${fraction}`;
+      get('clock-time').append(decimal);
+    }
+    const ageInfo = ageReadout(age, state.lang);
+    get('age').textContent = ageInfo.value;
+    get('age-label').textContent = ageInfo.label;
+    get('age-unit').textContent = ` ${ageInfo.unit}`;
     get('era-name').textContent = era[state.lang];
     document.documentElement.style.setProperty('--era', era.color);
     get('day-progress').style.strokeDashoffset = 1 - state.seconds / DAY_SECONDS;
     get('timeline').style.setProperty('--elapsed', `${state.seconds / DAY_SECONDS * 100}%`);
     get('hand').style.transform = `rotate(${state.seconds / DAY_SECONDS * 360}deg)`;
     get('timeline').value = state.seconds;
-    get('timeline').setAttribute('aria-valuetext', `${time}, ${ageText(age, state.lang)} ${copy[state.lang].before}, ${era[state.lang]}`);
+    get('timeline').setAttribute('aria-valuetext', `${time}, ${ageInfo.value} ${ageInfo.label}, ${era[state.lang]}`);
     get('era-key').querySelectorAll('span').forEach(node => node.classList.toggle('active', node.dataset.era === era.id));
+  }
+  function renderPosition(state, animate = false) {
+    transitions.position(state.seconds, seconds => drawPosition({ ...state, seconds }), animate);
   }
   function renderEvent(state, announce = false) {
     const item = events[state.index];
     const c = copy[state.lang];
     get('event-name').textContent = item[`name_${state.lang}`];
-    get('event-time').textContent = formatClock(myaToClock(item.mya));
-    get('event-age').textContent = `${ageText(item.mya, state.lang)} Ma`;
+    get('event-time').textContent = preciseClock(item.mya);
+    get('event-age').textContent = ageText(item.mya, state.lang);
     get('event-description').textContent = item[`description_${state.lang}`];
     get('category').textContent = c.category[item.category];
+    get('geological-context').setAttribute('aria-label', c.geology);
+    const context = geologyAt(item.mya);
+    get('geological-context').innerHTML = context.map(level => `<li><span>${c.ranks[level.rank]}</span>${level[state.lang]}</li>`).join('');
+    const boundary = context.some(level => item.mya === level.start && item.mya !== 4540);
+    get('boundary-note').hidden = !boundary;
+    get('boundary-note').textContent = c.boundary;
+    get('clock-context').textContent = perspectiveText(item, state.lang);
+    get('clock-context').hidden = !item.perspective;
+    curiosities.render(item, state.lang);
+    transitions.reveal([get('event-name'), get('event-description')]);
     get('event-card').dataset.chapter = String(state.index + 1).padStart(2, '0');
     get('event-source').href = item.source;
     get('uncertainty').hidden = !item.uncertain;
@@ -43,13 +73,13 @@ export function createUI() {
     get('prev').disabled = state.index === 0;
     get('next').disabled = state.index === events.length - 1;
     document.querySelectorAll('[data-event]').forEach(node => node.setAttribute('aria-pressed', String(node.dataset.event === item.id)));
-    if (announce) get('announcement').textContent = `${item[`name_${state.lang}`]}, ${formatClock(myaToClock(item.mya))}`;
+    if (announce) get('announcement').textContent = `${item[`name_${state.lang}`]}, ${preciseClock(item.mya)}`;
   }
   function renderLanguage(state) {
     const c = copy[state.lang];
     document.documentElement.lang = state.lang;
     document.title = `earth-clock — ${c.project}`;
-    document.querySelectorAll('[data-copy]').forEach(node => { node.textContent = c[node.dataset.copy]; });
+    document.querySelectorAll('[data-copy]').forEach(node => { const text = c[node.dataset.copy]; node.textContent = typeof text === 'function' ? text(events.length) : text; });
     const titleParts = c.title.split('\n');
     const emphasis = document.createElement('em');
     emphasis.textContent = titleParts[1];
@@ -65,7 +95,7 @@ export function createUI() {
     get('event-select').replaceChildren(...events.map(item => {
       const option = document.createElement('option');
       option.value = item.id;
-      option.textContent = `${formatClock(myaToClock(item.mya))} · ${item[`name_${state.lang}`]}`;
+      option.textContent = `${preciseClock(item.mya)} · ${item[`name_${state.lang}`]}`;
       return option;
     }));
     get('legend').innerHTML = Object.entries(c.category).map(([id, name]) => `<span class="${id}">${name}</span>`).join('');

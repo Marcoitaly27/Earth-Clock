@@ -1,4 +1,5 @@
-import { myaToSeconds, DAY_SECONDS, formatClock, myaToClock } from './time.js';
+import { myaToSeconds, DAY_SECONDS } from './time.js';
+import { preciseClock } from './perspective.js';
 import { eras } from './eras.js';
 
 export function pointAt(seconds, radius = 190) {
@@ -35,7 +36,7 @@ export function placeMarkers(items, lang) {
     cluster = seconds - previous < 1500 ? cluster + 1 : 0;
     const radius = 184 - (cluster % 7) * 15;
     const p = pointAt(seconds, radius);
-    const label = `${item[`name_${lang}`]} · ${formatClock(myaToClock(item.mya))}`;
+    const label = `${item[`name_${lang}`]} · ${preciseClock(item.mya)}`;
     return `<button type="button" class="marker ${item.category}" style="left:${p.x / 5}%;top:${p.y / 5}%" data-event="${item.id}" aria-label="${label}" title="${label}" aria-pressed="false"></button>`;
   }).join('');
 }
